@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.orca.fragment.CFragment;
+import com.example.orca.fragment.DataFragment;
 import com.example.orca.fragment.RFragment;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        button= (Button) findViewById(R.id.controller);
        button .setOnClickListener(this);
         findViewById(R.id.receiver).setOnClickListener(this);
+        findViewById(R.id.background_data).setOnClickListener(this);
     }
     @Override
     //各个按钮的响应
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fragmentTransaction2.replace(R.id.blank,rFragment);
                 fragmentTransaction2.commit();
                 break;
+            case R.id.background_data:
+                DataFragment dataFragment = new DataFragment();
+                FragmentTransaction fragmentTransaction3 = getFragmentManager().beginTransaction();
+                fragmentTransaction3.replace(R.id.blank,dataFragment);
+                fragmentTransaction3.commit();
+                break;
 
         }
 
@@ -70,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        button.setText(res);
+
 
                     }
                 });
@@ -83,64 +91,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onFailure(Request request, IOException e) {
 
             }
-
         });
     }
-    /*之前的请求写法*/
-   /* private void getRequest() {
-
-        final Request request=new Request.Builder()
-                .get()
-                .tag(this)
-                .url("http://www.baidu.com")
-                .build();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Response response = null;
-                try {
-                    response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        Log.i("WY","打印GET响应的数据：" + response.body().string());
-                    } else {
-                        throw new IOException("Unexpected code " + response);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
-
-    private void postRequest() {
-
-        RequestBody formBody = new FormEncodingBuilder()
-                .add("","")
-                .build();
-
-        final Request request = new Request.Builder()
-                .url("http://www.wooyun.org")
-                .post(formBody)
-                .build();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Response response = null;
-                try {
-                    response = client.newCall(request).execute();
-                    if (response.isSuccessful()) {
-                        Log.i("WY","打印POST响应的数据：" + response.body().string());
-                    } else {
-                        throw new IOException("Unexpected code " + response);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }*/
 }

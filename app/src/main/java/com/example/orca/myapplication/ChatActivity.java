@@ -35,24 +35,31 @@ public class ChatActivity  extends Activity  implements View.OnClickListener{
     private EditText sendText ;
     //private TextView revText;
     private List<ChatEntity> chatEntityList = new ArrayList<ChatEntity>();
-    //线程类作为成员变量
-//    public class mThread extends Thread{
-//        public  Handler mHandler=new Handler() {
-//            @Override
-//            public void handleMessage(Message msg) {
-//                switch (msg.what){
-//                    case 110:
-//                        Toast.makeText(ChatActivity.this, msg.obj.toString(), Toast.LENGTH_SHORT).show();
-//                        buf= (String) msg.obj;
-//                        Toast.makeText(ChatActivity.this, "recevied msg:"+buf, Toast.LENGTH_SHORT).show();
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        };;
-//        private  String buf;
-//    };
+    private  Handler handler= new Handler(){
+        @Override
+        public void handleMessage(Message msg) {//handler可以实现“监听”的效果
+            switch(msg.what){
+                case 110:
+                ChatEntity var2= new ChatEntity();
+                var2.setContent(msg.obj.toString());
+                var2.setComeMsg(true);
+                var2.setUserImage(1);
+                Calendar calendar2 = Calendar.getInstance();
+                String created2 = calendar2.get(Calendar.YEAR) + "年"
+                        + (calendar2.get(Calendar.MONTH)+1) + "月"
+                        + calendar2.get(Calendar.DAY_OF_MONTH) + "日"
+                        + calendar2.get(Calendar.HOUR_OF_DAY) + "时"
+                        + calendar2.get(Calendar.MINUTE) + "分"+calendar2.get(Calendar.SECOND)+"秒";
+                var2.setChatTime(created2);
+                chatEntityList.add(var2);
+                chatAdapter.notifyDataSetChanged();//刷新界面
+                listView.setSelection(chatEntityList.size());//listview定位到最后一行
+                break;
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +80,6 @@ public class ChatActivity  extends Activity  implements View.OnClickListener{
         {
             case R.id.send_button:;
                 //问题：没按一次发送新建一个对象，内存会boom
-
                 ChatEntity var1= new ChatEntity();
                 var1.setContent(sendText.getText().toString());
                 var1.setComeMsg(false);
@@ -86,36 +92,12 @@ public class ChatActivity  extends Activity  implements View.OnClickListener{
                         + calendar.get(Calendar.MINUTE) + "分"+calendar.get(Calendar.SECOND)+"秒";
                 var1.setChatTime(created);
                 chatEntityList.add(var1);
-                chatAdapter.notifyDataSetChanged();
-                listView.setSelection(chatEntityList.size());
-
-
-                Runnable socketTask= new SocketTask(sendText.getText().toString());
+                chatAdapter.notifyDataSetChanged();//刷新界面
+                listView.setSelection(chatEntityList.size());//listview定位到最后一行
+                Runnable socketTask= new SocketTask(sendText.getText().toString(),handler);
                 Thread thread = new Thread(socketTask);
                 thread.start();
-//               final mThread mthread = new mThread(SocketTask);//重写构造函数
-//               Message msg= new Message();
-//              msg.what=110;
-//               msg.obj =sendText.getText().toString();
-//               mthread.mHandler.sendMessage(msg);
-//              mthread.start();
                 sendText.setText("");
-//
-//
-//                ChatEntity var2= new ChatEntity();
-//                var1.setContent("welcome!");
-//                var1.setComeMsg(true);
-//                var1.setUserImage(1);
-//                Calendar calendar2 = Calendar.getInstance();
-//                String created2 = calendar.get(Calendar.YEAR) + "年"
-//                        + (calendar.get(Calendar.MONTH)+1) + "月"
-//                        + calendar.get(Calendar.DAY_OF_MONTH) + "日"
-//                        + calendar.get(Calendar.HOUR_OF_DAY) + "时"
-//                        + calendar.get(Calendar.MINUTE) + "分"+calendar.get(Calendar.SECOND)+"秒";
-//                var1.setChatTime(created2);
-//                chatEntityList.add(var2);
-//                chatAdapter.notifyDataSetChanged();
-//                listView.setSelection(chatEntityList.size());
                 break;
         }
     }

@@ -3,17 +3,39 @@
     android:id="@+id/c_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <Button
+    >
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="链接到机器人"
-        android:id="@+id/connect"/>
-    <Button
+        android:orientation="vertical">
+        <Button
+            android:background="@drawable/wifi"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:id="@+id/connect"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="连接机器人"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="要我干点啥"
+        android:orientation="vertical">
+    <Button
+        android:background="@drawable/chat"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:id="@+id/chat"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="远程控制"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
 
 
 </LinearLayout>

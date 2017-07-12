@@ -4,18 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我是自定义标题栏"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这里展示我"/>
 
-    <Button
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="打开音视频"
+        android:orientation="vertical">
+    <Button
+        android:background="@drawable/carmera2"
+        android:layout_width="110dp"
+        android:layout_height="111dp"
         android:id="@+id/open_video" />
+        <TextView
+            android:text="远程监控"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2" />
+    </LinearLayout>
+
+
+
+
 </LinearLayout>

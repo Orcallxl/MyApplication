@@ -18,18 +18,27 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
         <Button
+            android:background="#88b5fe"
             android:id="@+id/controller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Controler"
+            android:text="控制"
             />
+        <ImageButton
+            android:id="@+id/background_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/robot2"
+            />
+
         <Button
+            android:background="#88b5fe"
             android:id="@+id/receiver"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Receiver"/>
+            android:text="监控"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -1,5 +1,7 @@
 package com.example.orca.myapplication.TaskImpl;
 
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Toast;
 
 import com.example.orca.myapplication.ChatActivity;
@@ -16,15 +18,23 @@ import java.net.Socket;
 
 public class SocketTask implements Runnable {
     private String buf;
-    public String response;
-    public SocketTask(String buf)
+    private String response;
+    private Handler handler;
+    public SocketTask(String buf,Handler handler)
     {
         this.buf=buf;
+        this.handler=handler;
+
     }
+
+    public String getResponse() {
+        return response;
+    }
+
     @Override
     public void run() {
         try {
-            Socket socket = new Socket("10.0.2.22", 2345);
+            Socket socket = new Socket("10.0.2.22", 2346);
             //发送信息
             OutputStream os = socket.getOutputStream();
             PrintWriter pw = new PrintWriter(os);
@@ -42,13 +52,19 @@ public class SocketTask implements Runnable {
                 System.out.println("message from server" + info);
             }
             response = temp.toString();
+            if(response!=null){
+                Message msg = new Message();
+                msg.what=110;
+                msg.obj=response;
+                handler.handleMessage(msg);
+            }
             bw.close();
             isr.close();
             pw.close();
             os.close();
             socket.close();
         } catch (Exception e) {
-            System.out.print("socket boom!");
+
             e.printStackTrace();
         }
     }
